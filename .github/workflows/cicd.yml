@@ -3,41 +3,30 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main  # Triggers the workflow when changes are pushed to the 'main' branch
-  pull_request:  # Optional: Adds a check for pull requests
-    branches:
-      - main
+      - main  
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Specifies the operating system for the workflow runner
+    runs-on: ubuntu-latest  
 
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Docker Buildx for multi-platform builds
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Step 3: Log in to Docker Hub
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}  # Docker Hub username (stored in GitHub Secrets)
-          password: ${{ secrets.DOCKER_TOKEN }}     # Docker Hub access token (stored in GitHub Secrets)
+          username: ${{ secrets.DOCKER_USERNAME }}  
+          password: ${{ secrets.DOCKER_TOKEN }}     
 
-      # Step 4: Build and push the Docker image
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .  # Directory containing the Dockerfile
-          push: true  # Push the built image to Docker Hub
-          tags: ${{ secrets.DOCKER_USERNAME }}/shopping-list-app:latest  # Image name and tag
+      - name: Build Docker Image
+          run: make build
 
-      # Optional Step 5: Test the Docker image locally after building
-      - name: Test the Docker image (optional)
-        run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/shopping-list-app:latest
-          docker run --rm -p 5000:5000 ${{ secrets.DOCKER_USERNAME }}/shopping-list-app:latest
+      - name: Push Docker Image
+        run: make push
+        env:
+          DOCKER_ID_USER: ${{ secrets.DOCKER_USERNAME }}
+          IMAGE_NAME: shopping-list-app
