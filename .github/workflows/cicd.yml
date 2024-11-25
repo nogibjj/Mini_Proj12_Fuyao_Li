@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}     
 
       - name: Build Docker Image
-          run: make build
+        run: make build
 
       - name: Push Docker Image
         run: make push
