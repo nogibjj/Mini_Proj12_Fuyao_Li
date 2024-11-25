@@ -1,3 +1,5 @@
+[![CI/CD](https://github.com/nogibjj/Mini_Proj12_Fuyao_Li/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/Mini_Proj12_Fuyao_Li/actions/workflows/cicd.yml)
+
 # Mini_Proj12_Fuyao_Li
 
 ### Author: Fuyao Li
@@ -36,6 +38,8 @@ pip install -r requirements.txt
 2. `make push`:
 ![build](fig/make_push.png)
 
+The created Docker Image:
+![build](fig/image.png)
 
 ## Web Application Description
 This is a simple Flask-based web application for selecting and managing a list of cars based on predefined options for car brand, year, and mileage. Users can add cars to their selection and remove them as needed. The app is fully interactive and runs on a web browser.
